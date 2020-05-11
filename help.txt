@@ -1,0 +1,58 @@
+sudo virsh list --all
+
+sudo virsh undefine test-vm-ubuntu
+sudo virsh undefine master
+
+sudo terraform destroy -force
+
+
+
+sudo terraform validate
+sudo terraform plan
+sudo terraform apply -auto-approve
+
+
+cat ~/.ssh/id_rsa.pub
+
+sudo service networking restart
+
+
+virsh pool-list --all
+virsh vol-list ubuntu-pool
+virsh list --all
+virsh net-list --all
+virsh net-dhcp-leases default
+
+
+ssh terraform_guest@192.168.122.79
+
+
+sudo virsh list --all
+sudo virsh console 2
+
+
+
+
+
+
+
+sudo virsh net-define ~/kvm_project/libvirt_network_config.xml
+sudo virsh net-start picalc_net
+sudo virsh net-list --all
+
+
+command = "virsh net-define ${path.module}/libvirt_network_config.xml && virsh net-autostart picalc_net && virsh net-start picalc_net"
+
+
+----------------------------------
+/etc/libvirt/qemu.conf
+security_driver = "none"
+
+service libvirtd restart
+
+
+
+cd /ets/network/interfaces
+
+sudo service networking restart
+
