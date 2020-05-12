@@ -18,6 +18,10 @@ sudo apt -y install software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt -y install ansible
 
+#kubespray
+sudo apt -y install epel-release
+sudo apt -y install jinja2 --upgrade
+
 #terraform
 wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
 sudo unzip ./terraform_0.12.24_linux_amd64.zip -d /usr/local/bin/

@@ -1,0 +1,22 @@
+- name: Configure node ip
+  lineinfile:
+    path: /etc/default/kubelet
+    line: KUBELET_EXTRA_ARGS=--node-ip={{ node_ip }}
+
+- name: Initialize the Kubernetes cluster using kubeadm
+  shell: kubeadm init --apiserver-advertise-address="{{master0_ip}}" --apiserver-cert-extra-sans="{{master0_ip}}"  --node-name k8s-master --pod-network-cidr={{pod_network_cidr}}
+
+- name: Install flannel networking
+  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  become: true
+
+- name: Generate join command
+  command: kubeadm token create --print-join-command
+  register: join_command
+
+- name: Copy join command to local file
+  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
+
+- name: Install kubelet kubeadm kubectl
+  shell: kubectl proxy &
+  become: true

@@ -1,0 +1,5 @@
+- hosts: masters
+  roles:
+    - docker
+    - k8s
+    - master

@@ -9,9 +9,10 @@ resource "libvirt_volume" "master" {
 
 resource "libvirt_cloudinit_disk" "masterinit" {
   count = var.master_count
-  name = "masterinit1${count.index}"
+  name = "masterinit${count.index}"
   pool = libvirt_pool.k8s-pool.name
-  user_data = data.template_file.user_data.rendered
+  user_data = data.template_file.master_data[count.index].rendered
+  network_config = data.template_file.master_network[count.index].rendered
 }
 
 resource "libvirt_domain" "master" {
@@ -21,15 +22,22 @@ resource "libvirt_domain" "master" {
   vcpu  = var.master_cpus
   autostart = "true"
 
-  network_interface {
+  #network_interface {
       #network_id = libvirt_network.k8s_network.id
-      wait_for_lease = true
-      hostname = "master${count.index}"
-      bridge = var.bridge
-      addresses = ["192.168.1.${count.index + 100}"]
-      mac = "AA:BB:CC:11:22:0${count.index}"
-  }
+      #wait_for_lease = true
+      #hostname = "master${count.index}"
+      #network_name = "default"
+      #network_id = libvirt_network.default.id
+      #bridge = var.bridge
+      #addresses = ["192.168.1.${count.index + 100}"]
+      #mac = "AA:BB:CC:11:22:0${count.index}"
+  #}
   
+  network_interface {
+    wait_for_lease = true
+    bridge = var.bridge
+  }
+
   boot_device {
     dev = ["hd", "network"]
   }
@@ -52,4 +60,24 @@ resource "libvirt_domain" "master" {
     autoport = true
   }
 
+
+  #provisioner "remote-exec" {
+  #  inline = ["sudo hostnamectl set-hostname master${count.index}"]
+  #}
+
+  #provisioner "local-exec" {
+  # command = "sudo hostnamectl set-hostname master${count.index}"
+  #}
+
 }
+
+output "master_hostname" {
+  value = "${libvirt_domain.master.*.network_interface.0.hostname}"
+  description = "The hostname of the master server instance"
+}
+
+output "master_ip" {
+  value = "${libvirt_domain.master.*.network_interface.0.addresses}"
+  description = "The IP address of the master server instance"
+}
+

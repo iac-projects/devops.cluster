@@ -1,5 +1,24 @@
 data "template_file" "user_data" {
   template = "${file("${path.module}/cloud_init.cfg")}"
+  #count = var.master_count
+  vars = {
+    hostname = "k8s"
+    #hostname = "master${count.index}"
+    #username           = var.username
+    #ssh_public_key     = file(var.ssh_public_key)
+    #packages           = jsonencode(var.packages)
+  }
+}
+
+variable nameservers {
+  type    = list
+  default = ["192.168.1.100","192.168.1.101"]
+}
+
+variable "ssh_public_key" {
+  description = "Path to SSH Public Key file from ssh-keygen"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 variable "bridge" {

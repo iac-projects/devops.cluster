@@ -1,0 +1,27 @@
+#cloud-config
+packages:
+  - qemu-guest-agent
+#  - python3-pip
+
+runcmd:
+  - sudo systemctl enable qemu-guest-agent
+#  - sudo hostnamectl set-hostname ${hostname}
+
+ssh_pwauth: True
+chpasswd:
+  list: |
+     root:hardpassword
+  expire: False
+
+users:
+  - name: user
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: users, admin
+    home: /home/user
+    shell: /bin/bash
+    ssh-authorized-keys: #your cat ~/.ssh/id_rsa.pub
+      - ${ssh_public_key}
+
+hostname: ${hostname}
+local-hostname: ${hostname}
+instance-id: ${hostname}

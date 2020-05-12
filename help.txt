@@ -56,3 +56,5 @@ cd /ets/network/interfaces
 
 sudo service networking restart
 
+
+ssh-keygen
