@@ -6,4 +6,4 @@ ethernets:
     addresses:
       - ${ip_address}
     nameservers:
-      addresses: [192.168.1.1, 8.8.8.8]
+      addresses: ${nameservers}
