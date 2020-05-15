@@ -1,31 +1,4 @@
-data "template_file" "user_data" {
-  template = "${file("${path.module}/cloud_init.cfg")}"
-  #count = var.master_count
-  vars = {
-    hostname = "k8s"
-    #hostname = "master${count.index}"
-    #username           = var.username
-    #ssh_public_key     = file(var.ssh_public_key)
-    #packages           = jsonencode(var.packages)
-  }
-}
-
-variable nameservers {
-  type    = list
-  default = ["192.168.1.100","192.168.1.101"]
-}
-
-variable "ssh_public_key" {
-  description = "Path to SSH Public Key file from ssh-keygen"
-  type        = string
-  default     = "~/.ssh/id_rsa.pub"
-}
-
-variable "bridge" {
-  description = "Name of the libvirt netowkr interface to use"
-  type        = string
-  default     = "br0"
-}
+#Master machines settings
 
 variable "master_count" {
   description = "Number of masters"
@@ -51,6 +24,8 @@ variable "master_disk_size" {
   default     = "10000000000"
 }
 
+#Nodes (workers) machines settings
+
 variable "node_count" {
   description = "Number of nodes"
   type        = string
@@ -74,3 +49,76 @@ variable "node_disk_size" {
   type        = string
   default     = "30000000000"
 }
+
+#Account and security settings
+
+variable "username" {
+  description = "OS root username"
+  type        = string
+  default     = "user"
+}
+
+variable "password" {
+  description = "OS root password"
+  type        = string
+  default     = "hardpassword"
+}
+
+variable "ssh_public_key" {
+  description = "Path to SSH Public Key file created by ssh-keygen"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}
+
+
+#Network settings
+
+variable "bridge" {
+  description = "Name of the libvirt network interface to use"
+  type        = string
+  default     = "br0"
+}
+
+variable "dhcp" {
+  description = "Boolean flag for enabling to retrieve IP-address from DHCP-server. If false - it should be set ip_address, gateway, nameservers"
+  type        = string
+  default     = "false"
+}
+
+variable "master_ip_address" {
+  description = "IP addresses for master machines with netmask"
+  type        = string
+  default     = "192.168.1.100/24"
+}
+
+variable "node_ip_address" {
+  description = "IP address for node machines with netmask"
+  type        = string
+  default     = "192.168.1.110/24"
+}
+
+variable "gateway" {
+  description = "IP address of gateway"
+  type        = string
+  default     = "192.168.1.1"
+}
+
+variable nameservers {
+  description = "IP addresses list of dns servers"
+  type    = list
+  default = ["192.168.1.1","8.8.8.8"]
+}
+
+#Packages
+variable packages {
+  description = "packages"
+  type    = list
+  default = ["qemu-guest-agent"]
+}
+
+
+
+
+
+
+

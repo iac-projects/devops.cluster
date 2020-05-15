@@ -1,7 +1,7 @@
 resource "libvirt_volume" "master" {
   count = var.master_count
   name = "master${count.index}"
-  pool = libvirt_pool.k8s-pool.name
+  pool = libvirt_pool.base-pool.name
   base_volume_id = libvirt_volume.base.id
   format = "qcow2"
   size = var.master_disk_size
@@ -10,7 +10,7 @@ resource "libvirt_volume" "master" {
 resource "libvirt_cloudinit_disk" "masterinit" {
   count = var.master_count
   name = "masterinit${count.index}"
-  pool = libvirt_pool.k8s-pool.name
+  pool = libvirt_pool.base-pool.name
   user_data = data.template_file.master_data[count.index].rendered
   network_config = data.template_file.master_network[count.index].rendered
 }
@@ -22,17 +22,6 @@ resource "libvirt_domain" "master" {
   vcpu  = var.master_cpus
   autostart = "true"
 
-  #network_interface {
-      #network_id = libvirt_network.k8s_network.id
-      #wait_for_lease = true
-      #hostname = "master${count.index}"
-      #network_name = "default"
-      #network_id = libvirt_network.default.id
-      #bridge = var.bridge
-      #addresses = ["192.168.1.${count.index + 100}"]
-      #mac = "AA:BB:CC:11:22:0${count.index}"
-  #}
-  
   network_interface {
     wait_for_lease = true
     bridge = var.bridge
@@ -59,15 +48,6 @@ resource "libvirt_domain" "master" {
     listen_type = "address"
     autoport = true
   }
-
-
-  #provisioner "remote-exec" {
-  #  inline = ["sudo hostnamectl set-hostname master${count.index}"]
-  #}
-
-  #provisioner "local-exec" {
-  # command = "sudo hostnamectl set-hostname master${count.index}"
-  #}
 
 }
 

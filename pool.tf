@@ -1,7 +1,7 @@
 # create pool
-resource "libvirt_pool" "k8s-pool" {
-   name = "k8s-pool"
+resource "libvirt_pool" "base-pool" {
+   name = "base-pool"
    type = "dir"
-   path = "/libvirt_images/k8s-pool/"
+   path = "/libvirt_images/base-pool/"
 }
 
