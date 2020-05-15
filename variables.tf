@@ -86,16 +86,16 @@ variable "dhcp" {
 }
 
 variable "master_ip_address" {
-  description = "IP addresses for master machines with netmask"
+  description = "IP addresses template for master machines"
   type        = string
   default     = "192.168.1.100/24"
 }
 
-variable "node_ip_address" {
-  description = "IP address for node machines with netmask"
-  type        = string
-  default     = "192.168.1.110/24"
-}
+#variable "node_ip_address" {
+#  description = "IP address template for node machines"
+#  type        = string
+#  default     = "192.168.1."
+#}
 
 variable "gateway" {
   description = "IP address of gateway"
