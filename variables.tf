@@ -29,7 +29,7 @@ variable "master_disk_size" {
 variable "node_count" {
   description = "Number of nodes"
   type        = string
-  default     = "1"
+  default     = "2"
 }
 
 variable "node_cpus" {
