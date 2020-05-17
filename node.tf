@@ -25,6 +25,7 @@ resource "libvirt_domain" "node" {
   network_interface {
     wait_for_lease = true
     bridge = var.bridge
+    mac = "AA:BB:CC:11:22:5${count.index}"
   }
 
   boot_device {

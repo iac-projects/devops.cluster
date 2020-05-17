@@ -11,14 +11,14 @@ data "template_file" "master_data" {
 }
 
 data "template_file" "master_network" {
-  template = "${file("${path.module}/templates/network.yml")}"
+  template = "${file("${path.module}/templates/network_dhcp.yml")}"
   count = var.master_count
-  vars = {
-    dhcp = var.dhcp
-    ip_address = var.master_ip_address
-    gateway = var.gateway
-    nameservers = jsonencode(var.nameservers)
-  }
+  #vars = {
+  #  dhcp = var.dhcp
+  #  ip_address = var.master_ip_address
+  #  gateway = var.gateway
+  #  nameservers = jsonencode(var.nameservers)
+  #}
 }
 
 data "template_file" "node_data" {

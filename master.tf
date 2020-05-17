@@ -25,6 +25,7 @@ resource "libvirt_domain" "master" {
   network_interface {
     wait_for_lease = true
     bridge = var.bridge
+    mac = "AA:BB:CC:11:22:0${count.index}"
   }
 
   boot_device {
