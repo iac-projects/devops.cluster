@@ -21,6 +21,7 @@ resource "libvirt_domain" "node" {
   memory = var.node_memory
   vcpu  = var.node_cpus
   autostart = "true"
+  qemu_agent = "true"
 
   network_interface {
     wait_for_lease = true
