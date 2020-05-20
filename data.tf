@@ -4,7 +4,7 @@ data "template_file" "node_data" {
   vars = {
     hostname = "node${count.index+1}"
     ssh_public_key = file(var.ssh_public_key)
-    username = var.username
+    #username = var.username
     password = var.password
     packages = jsonencode(var.packages)
   }

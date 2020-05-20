@@ -1,35 +1,9 @@
-#Master machines settings
-
-variable "master_count" {
-  description = "Number of masters"
-  type        = string
-  default     = "1"
-}
-
-variable "master_cpus" {
-  description = "Number of CPUs to assign to the masters"
-  type        = string
-  default     = "2"
-}
-
-variable "master_memory" {
-  description = "Amount of memory in MiB to assign to the masters"
-  type        = string
-  default     = "4096"
-}
-
-variable "master_disk_size" {
-  description = "Size of the master disk in bytes"
-  type        = string
-  default     = "10000000000"
-}
-
-#Nodes (workers) machines settings
+#Nodes machines settings
 
 variable "node_count" {
   description = "Number of nodes"
   type        = string
-  default     = "1"
+  default     = "5"
 }
 
 variable "node_cpus" {
@@ -51,12 +25,6 @@ variable "node_disk_size" {
 }
 
 #Account and security settings
-
-variable "username" {
-  description = "OS root username"
-  type        = string
-  default     = "user"
-}
 
 variable "password" {
   description = "OS root password"
@@ -82,20 +50,14 @@ variable "bridge" {
 variable "dhcp" {
   description = "Boolean flag for enabling to retrieve IP-address from DHCP-server. If false - it should be set ip_address, gateway, nameservers"
   type        = string
-  default     = "false"
+  default     = "true"
 }
 
-variable "master_ip_address" {
-  description = "IP addresses template for master machines"
+variable "node_ip_address" {
+  description = "IP address template for node machines"
   type        = string
   default     = "192.168.1.100/24"
 }
-
-#variable "node_ip_address" {
-#  description = "IP address template for node machines"
-#  type        = string
-#  default     = "192.168.1."
-#}
 
 variable "gateway" {
   description = "IP address of gateway"
