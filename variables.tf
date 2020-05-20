@@ -29,7 +29,7 @@ variable "master_disk_size" {
 variable "node_count" {
   description = "Number of nodes"
   type        = string
-  default     = "2"
+  default     = "5"
 }
 
 variable "node_cpus" {
@@ -47,7 +47,7 @@ variable "node_memory" {
 variable "node_disk_size" {
   description = "Size of the node disk in bytes"
   type        = string
-  default     = "30000000000"
+  default     = "137438953472" #128Gb
 }
 
 #Account and security settings
