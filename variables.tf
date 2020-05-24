@@ -21,8 +21,15 @@ variable "node_memory" {
 variable "node_disk_size" {
   description = "Size of the node disk in bytes"
   type        = string
-  default     = "137438953472" #128Gb
+  default     = "34359738368" #32Gb
 }
+
+variable "data_disk_size" {
+  description = "Size of the data disk in bytes"
+  type        = string
+  default     = "68719476736" #64Gb
+}
+
 
 #Account and security settings
 

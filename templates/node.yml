@@ -25,3 +25,14 @@ users:
 hostname: ${hostname}
 local-hostname: ${hostname}
 instance-id: ${hostname}
+
+fs_setup:
+  - label: data
+    filesystem: 'ext4'
+    device: '/dev/vdb'
+    partition: 'auto'
+
+mounts:
+ - [ /dev/vdb, /mnt/datadisk]
+
+mount_default_fields: [ None, None, "auto", "defaults,nofail", "0", "2" ]

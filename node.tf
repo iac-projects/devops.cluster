@@ -7,6 +7,14 @@ resource "libvirt_volume" "node" {
   size = var.node_disk_size
 }
 
+resource "libvirt_volume" "data" {
+  count = var.node_count
+  name = "data${count.index+1}"
+  pool = "default"
+  format = "qcow2"
+  size = var.data_disk_size
+}
+
 resource "libvirt_cloudinit_disk" "nodeinit" {
   count = var.node_count
   name = "nodeinit${count.index+1}"
@@ -41,6 +49,10 @@ resource "libvirt_domain" "node" {
 
   disk {
       volume_id = element(libvirt_volume.node.*.id, count.index)
+  }
+
+  disk {
+      volume_id = element(libvirt_volume.data.*.id, count.index)
   }
 
   cloudinit = element(libvirt_cloudinit_disk.nodeinit.*.id, count.index)
